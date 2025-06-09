@@ -1,0 +1,15 @@
+{
+  "name": "@demorepo/monorepo-demo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter './apps/**' dev",
+    "build": "pnpm --recursive build",
+    "lint": "pnpm --recursive lint"
+  },
+  "devDependencies": {
+    "@demorepo/eslint-config-custom": "workspace:*",
+    "eslint": "^8.57.1"
+  },
+  "packageManager": "pnpm@9.15.4+sha1.ffa0b5c573381e8035b354028ccff97c8e452047"
+}

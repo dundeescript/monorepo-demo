@@ -1,0 +1,8 @@
+{
+  "name": "@demorepo/utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  }
+}

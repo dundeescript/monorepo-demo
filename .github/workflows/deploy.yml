@@ -1,0 +1,68 @@
+name: Selective Deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  detect-changes:
+    name: Detect Changed Services
+    runs-on: ubuntu-latest
+    outputs:
+      ecommerce_changed: ${{ steps.filter.outputs.ecommerce }}
+      api_changed: ${{ steps.filter.outputs.api }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch base branch and get diff
+        run: |
+          git fetch origin master --depth=100
+          git diff --name-only HEAD^ HEAD > changed.txt
+
+      - name: Filter for affected services
+        id: filter
+        run: |
+          ecommerce=false
+          api=false
+          admin=false
+
+          if grep -qE '^apps/admin/|^packages/utils/' changed.txt; then
+            admin=true
+          fi
+
+          if grep -qE '^apps/ecommerce/|^packages/utils/' changed.txt; then
+            ecommerce=true
+          fi
+
+          if grep -qE '^apps/api/|^packages/utils/' changed.txt; then
+            api=true
+          fi
+
+          echo "ecommerce=$ecommerce" >> $GITHUB_OUTPUT
+          echo "api=$api" >> $GITHUB_OUTPUT
+          echo "admin=$admin" >> $GITHUB_OUTPUT
+
+  deploy-ecommerce:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.ecommerce_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploying ecommerce"
+
+  deploy-api:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.api_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploying api"
+  
+  deploy-admin:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.admin_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploying admin"

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { CartContext } from '../CartContext';
 import { formatCurrency } from '@demorepo/utils';
 import styles from './Cart.module.css';
-import { Button } from '@demorepo/ui';
+import { Button, Toast } from '@demorepo/ui';
 
 function Cart() {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
@@ -11,10 +11,23 @@ function Cart() {
   const shipping = 10;
   const total = subtotal + shipping;
 
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
   const handleQuantityChange = (id, value) => {
     setQuantity(prevState => ({ ...prevState, [id]: value }));
     updateQuantity(id, value);
+    setToastMessage(`Quantity changed in cart!`);
+    setShowToast(true);
   };
+
+  const handleRemoveFromCart = (id) => {
+    if (confirm('Are you sure you want to remove this item?')) {
+      removeFromCart(id);
+      setToastMessage(`Item removed from cart!`);
+      setShowToast(true);
+    }
+  }
 
   return (
     <div className={styles.cart}>
@@ -50,7 +63,7 @@ function Cart() {
                   +
                 </button>
               </div>
-              <Button variant="error" onClick={() => confirm('Are you sure you want to remove this item?') && removeFromCart(item.id)}>
+              <Button variant="error" onClick={() => handleRemoveFromCart(item.id)}>
                 Remove
               </Button>
             </div>
@@ -59,9 +72,20 @@ function Cart() {
             <p>Subtotal: {formatCurrency(subtotal)}</p>
             <p>Shipping: {formatCurrency(shipping)}</p>
             <p>Total: {formatCurrency(total)}</p>
+            </div>
+            
+           
           </div>
-        </div>
       )}
+
+       {showToast && (
+          <Toast
+            message={toastMessage}
+            onClose={() => setShowToast(false)}
+            type="success"
+            duration={3000}
+          />
+        )}
     </div>
   );
 }

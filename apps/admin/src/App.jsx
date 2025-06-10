@@ -26,6 +26,8 @@ function App() {
       .then(data => {
         setProducts([...products, data]);
         setNewProduct({ name: '', price: 0, stock: 0 });
+        // Do some Toast magic here
+        
       });
   };
 
@@ -37,6 +39,14 @@ function App() {
         setProducts(products.filter(product => product.id !== id));
       });
   };
+
+  const handleDeleteProduct = (e, id) => {
+    e.preventDefault();
+    if (confirm('Are you sure you want to delete this product?')) {
+      handleDelete(id);
+      // Do some Toast magic here
+    }
+  }
 
   return (
     <div className="admin-panel">
@@ -79,7 +89,7 @@ function App() {
               <td>{formatCurrency(product.price)}</td>
               <td>{product.stock}</td>
               <td>
-                <Button variant="error" onClick={() => confirm('Are you sure you want to delete this product?') && handleDelete(product.id)}>Delete</Button>
+                <Button variant="error" onClick={(e) => handleDeleteProduct(e, product.id)}>Delete</Button>
               </td>
             </tr>
           ))}

@@ -11,21 +11,21 @@ function Cart() {
   const shipping = 10;
   const total = subtotal + shipping;
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  // const [showToast, setShowToast] = useState(false);
+  // const [toastMessage, setToastMessage] = useState('');
 
   const handleQuantityChange = (id, value) => {
     setQuantity(prevState => ({ ...prevState, [id]: value }));
     updateQuantity(id, value);
-    setToastMessage(`Quantity changed in cart!`);
-    setShowToast(true);
+    // setToastMessage(`Quantity changed in cart!`);
+    // setShowToast(true);
   };
 
   const handleRemoveFromCart = (id) => {
     if (confirm('Are you sure you want to remove this item?')) {
       removeFromCart(id);
-      setToastMessage(`Item removed from cart!`);
-      setShowToast(true);
+      // setToastMessage(`Item removed from cart!`);
+      // setShowToast(true);
     }
   }
 
@@ -72,13 +72,11 @@ function Cart() {
             <p>Subtotal: {formatCurrency(subtotal)}</p>
             <p>Shipping: {formatCurrency(shipping)}</p>
             <p>Total: {formatCurrency(total)}</p>
-            </div>
-            
-           
           </div>
+        </div>
       )}
 
-       {showToast && (
+       {/* {showToast && (
         <>
           <Toast
             message={toastMessage}
@@ -88,7 +86,7 @@ function Cart() {
           />
           <Confetti trigger={showToast} />
         </>
-        )}
+        )} */}
     </div>
   );
 }

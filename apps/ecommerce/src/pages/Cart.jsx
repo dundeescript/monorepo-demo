@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { CartContext } from '../CartContext';
 import { formatCurrency } from '@demorepo/utils';
 import styles from './Cart.module.css';
-import { Button, Toast } from '@demorepo/ui';
+import { Button, Confetti, Toast } from '@demorepo/ui';
 
 function Cart() {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
@@ -79,12 +79,15 @@ function Cart() {
       )}
 
        {showToast && (
+        <>
           <Toast
             message={toastMessage}
             onClose={() => setShowToast(false)}
             type="success"
             duration={3000}
           />
+          <Confetti trigger={showToast} />
+        </>
         )}
     </div>
   );

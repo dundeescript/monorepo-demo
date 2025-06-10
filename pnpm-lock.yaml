@@ -85,6 +85,9 @@ importers:
       '@demorepo/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      canvas-confetti:
+        specifier: ^1.9.3
+        version: 1.9.3
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -138,7 +141,11 @@ importers:
         specifier: ^4.6.0
         version: 4.6.2(eslint@8.57.1)
 
-  packages/ui: {}
+  packages/ui:
+    dependencies:
+      canvas-confetti:
+        specifier: ^1.9.3
+        version: 1.9.3
 
   packages/utils:
     dependencies:
@@ -726,6 +733,9 @@ packages:
 
   caniuse-lite@1.0.30001721:
     resolution: {integrity: sha512-cOuvmUVtKrtEaoKiO0rSc29jcjwMwX5tOHDy4MgVFEWiUXj4uBMJkwI8MDySkgXidpMiHUcviogAvFi4pA2hDQ==}
+
+  canvas-confetti@1.9.3:
+    resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -2234,6 +2244,8 @@ snapshots:
   callsites@3.1.0: {}
 
   caniuse-lite@1.0.30001721: {}
+
+  canvas-confetti@1.9.3: {}
 
   chalk@4.1.2:
     dependencies:

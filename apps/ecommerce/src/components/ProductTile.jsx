@@ -2,19 +2,21 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ProductTile.module.css';
 import { formatCurrency } from '@demorepo/utils';
-import { Button, Toast } from '@demorepo/ui';
+import { Button, Toast, Confetti } from '@demorepo/ui';
 import { CartContext } from '../CartContext';
+
 function ProductTile({ product }) {
   const { addToCart } = useContext(CartContext);
-  // const [showToast, setShowToast] = React.useState(false);
-  // const [toastMessage, setToastMessage] = React.useState('');
+  const [showToast, setShowToast] = React.useState(false);
+  const [toastMessage, setToastMessage] = React.useState('');
 
 
   const handleAddToCart = (e, product) => {
     e.preventDefault();
     addToCart(product);
-    // setToastMessage(`${product.name} added to cart!`);
-    // setShowToast(true);
+    setToastMessage(`${product.name} added to cart!`);
+    setShowToast(true);
+
   };
 
   return (
@@ -32,7 +34,9 @@ function ProductTile({ product }) {
           </Button>
         )}
       </Link>
-      {/* {showToast && <Toast message={toastMessage} onClose={() => setShowToast(false)} />} */}
+      {showToast && <Toast message={toastMessage} onClose={() => setShowToast(false)} />}
+                <Confetti trigger={showToast} />
+
     </li>
   );
 }

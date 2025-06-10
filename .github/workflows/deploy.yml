@@ -2,7 +2,7 @@ name: Selective Deploy
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   detect-changes:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Fetch base branch and get diff
         run: |
-          git fetch origin master --depth=100
+          git fetch origin main --depth=1
           git diff --name-only HEAD^ HEAD > changed.txt
 
       - name: Filter for affected services
